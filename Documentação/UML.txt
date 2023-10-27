@@ -1,0 +1,149 @@
+A documentação UML (Unified Modeling Language) é uma forma padronizada de representar visualmente um sistema de software. Como você solicitou uma documentação escrita sem parte gráfica:
+
+### Diagrama de Classes:
+
+#### Classe: PulseiraIoT
+
+- **Métodos:**
+    - `main(String[] args)`: Método de inicialização do programa. Cria uma instância da classe `Pulseira`, configura a interface gráfica e inicializa a aplicação.
+
+    - `confirmDialog(JFrame frame, String title, String message)`: Exibe uma caixa de diálogo de confirmação. Retorna verdadeiro se o usuário clicar em "Sim", falso se clicar em "Não".
+
+#### Classe: Pulseira
+
+- **Atributos:**
+    - `sensores`: Lista de objetos da classe `MiniSensor`.
+
+    - `pessoasConhecidas`: Lista de objetos da classe `PessoaConhecida`.
+
+    - `pessoaNaoCadastrada`: Objeto da classe `PessoaNaoCadastrada`.
+
+    - `connected`: Indica se a pulseira está conectada.
+
+    - `selectedPessoa`: Referência à pessoa conhecida selecionada.
+
+    - `selectedPessoaNaoCadastrada`: Referência à pessoa não cadastrada selecionada.
+
+- **Métodos:**
+    - `cadastrarPessoaNoArquivo(String nome)`: Adiciona um nome ao arquivo de contatos.
+
+    - `excluirPessoaDoArquivo(String nome)`: Remove um nome do arquivo de contatos.
+
+    - `getPessoaConhecidaByName(String nome)`: Retorna uma pessoa conhecida pelo nome.
+
+    - `toggleConnection()`: Alterna o estado de conexão da pulseira.
+
+    - `detectObjects(double mouseX, double mouseY)`: Detecta objetos com base na posição do mouse.
+
+    - `detectPessoasConhecidas()`: Detecta pessoas conhecidas próximas aos sensores.
+
+    - `detectPessoaNaoCadastrada()`: Detecta uma pessoa não cadastrada próxima aos sensores.
+
+    - `vibrate()`: Simula a vibração dos sensores.
+
+    - `addPessoaConhecida(String nome, double x, double y)`: Adiciona uma pessoa conhecida à lista.
+
+    - `removePessoaConhecida(double x, double y)`: Remove uma pessoa conhecida da lista.
+
+    - `loadPessoasCadastradas()`: Carrega pessoas cadastradas do arquivo.
+
+    - `listarNomesDoArquivo()`: Lista os nomes no arquivo de contatos.
+
+#### Classe: MiniSensor
+
+- **Atributos:**
+    - `x`: Coordenada x do sensor.
+    - `y`: Coordenada y do sensor.
+    - `detecting`: Indica se o sensor está detectando algo.
+
+#### Classe: PessoaConhecida
+
+- **Atributos:**
+    - `x`: Coordenada x da pessoa conhecida.
+    - `y`: Coordenada y da pessoa conhecida.
+    - `nome`: Nome da pessoa conhecida.
+    - `detecting`: Indica se a pessoa conhecida está sendo detectada pelos sensores.
+
+#### Classe: PessoaNaoCadastrada
+
+- **Atributos:**
+    - `x`: Coordenada x da pessoa não cadastrada.
+    - `y`: Coordenada y da pessoa não cadastrada.
+    - `detecting`: Indica se a pessoa não cadastrada está sendo detectada pelos sensores.
+
+### Considerações Finais:
+
+O código fornece uma implementação de uma aplicação de Pulseira IoT que interage com sensores e pode detectar pessoas conhecidas e não cadastradas. Ele também oferece funcionalidades de cadastro, exclusão e manipulação de dados de contatos em um arquivo. A interface gráfica é construída usando a biblioteca Swing em Java.
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+No programa fornecido, existem três classes principais: `PulseiraIoT`, `Pulseira` e `MiniSensor`. Além disso, há também as classes `PessoaConhecida` e `PessoaNaoCadastrada`. Vamos discutir os relacionamentos entre essas classes:
+
+1. **PulseiraIoT**:
+
+   - **Relacionamento com a Classe `Pulseira`**:
+   
+     - A classe `PulseiraIoT` cria uma instância da classe `Pulseira` no método `main`.
+
+   - **Relacionamento com a Interface Gráfica**:
+   
+     - `PulseiraIoT` é responsável por configurar a interface gráfica (Swing) ao criar uma instância de `JFrame`.
+
+   - **Relacionamento com a Classe `File`**:
+
+     - `PulseiraIoT` interage com a classe `File` ao verificar se um arquivo chamado "contatos.txt" existe e, caso contrário, cria um novo.
+
+2. **Pulseira**:
+
+   - **Relacionamento com `MiniSensor`**:
+
+     - A classe `Pulseira` contém uma lista de objetos do tipo `MiniSensor` chamada `sensores`.
+
+   - **Relacionamento com `PessoaConhecida`**:
+
+     - `Pulseira` possui uma lista de objetos `PessoaConhecida` chamada `pessoasConhecidas`.
+
+   - **Relacionamento com `PessoaNaoCadastrada`**:
+
+     - `Pulseira` tem uma instância da classe `PessoaNaoCadastrada` chamada `pessoaNaoCadastrada`.
+
+   - **Relacionamento com `PulseiraIoT`**:
+
+     - `Pulseira` interage com a classe `PulseiraIoT` ao acessar métodos como `confirmDialog` e ao usar a referência ao `frame` para exibir caixas de diálogo.
+
+   - **Relacionamento com Arquivo**:
+
+     - `Pulseira` lida com arquivos ao cadastrar e excluir pessoas do arquivo "contatos.txt".
+
+   - **Relacionamento com Interface Gráfica**:
+
+     - `Pulseira` interage com a interface gráfica através de eventos de botões e ações do mouse, como cadastro e exclusão de pessoas, além de atualizar o painel de desenho.
+
+3. **MiniSensor**:
+
+   - **Relacionamento com `Pulseira`**:
+
+     - `MiniSensor` faz parte da composição da classe `Pulseira`, sendo uma lista de sensores.
+
+4. **PessoaConhecida**:
+
+   - **Relacionamento com `Pulseira`**:
+
+     - `PessoaConhecida` é parte da composição da classe `Pulseira`, sendo uma lista de pessoas conhecidas.
+
+5. **PessoaNaoCadastrada**:
+
+   - **Relacionamento com `Pulseira`**:
+
+     - `PessoaNaoCadastrada` é uma instância dentro da classe `Pulseira`.
+
+   - **Relacionamento com Interface Gráfica**:
+
+     - A classe `PessoaNaoCadastrada` é desenhada no painel da interface gráfica quando detectada pelos sensores.
+
+6. **Relacionamentos de Dependência**:
+
+   - Dentro dos métodos da classe `Pulseira`, há dependências de classes externas, como `JOptionPane` para exibir caixas de diálogo e `BufferedWriter` e `BufferedReader` para lidar com arquivos.
+
+Esses são os principais relacionamentos entre as classes no programa fornecido. Eles indicam como as diferentes classes interagem umas com as outras e desempenham papéis específicos na funcionalidade geral da aplicação.
