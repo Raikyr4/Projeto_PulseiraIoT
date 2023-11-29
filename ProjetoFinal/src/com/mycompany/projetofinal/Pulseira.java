@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 class Pulseira {
     ArrayList<MiniSensor> sensores = new ArrayList<>();
@@ -21,9 +22,9 @@ class Pulseira {
         sensores.add(new MiniSensor(50, 250));
     }
 
-    void cadastrarPessoaNoArquivo(String nome) {
+    void cadastrarPessoaNoArquivo(String nome, Integer id) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("contatos.txt", true))) {
-            writer.write(nome);
+            writer.write(id.toString() + " -> " + nome);
             writer.newLine();
             writer.flush();
         } catch (IOException e) {
@@ -31,12 +32,12 @@ class Pulseira {
         }
     }
 
-    void excluirPessoaDoArquivo(String nome) {
+    void excluirPessoaDoArquivo(String codigo) {
         ArrayList<String> linhas = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("contatos.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (!line.equals(nome)) {
+                if (!line.contains(codigo)) {
                     linhas.add(line);
                 }
             }
@@ -62,7 +63,14 @@ class Pulseira {
         }
         return null;
     }
-
+    PessoaConhecida getPessoaConhecidaById(String codigo) {
+        for (PessoaConhecida pessoa : pessoasConhecidas) {
+            if (pessoa.id.toString().equals(codigo)) {
+                return pessoa;
+            }
+        }
+        return null;
+    }
     void toggleConnection() {
         connected = !connected;
         System.out.println("Pulseira " + (connected ? "ligada." : "desligada."));
@@ -129,9 +137,14 @@ class Pulseira {
         }
     }
 
-    void addPessoaConhecida(String nome, double x, double y) {
+    Integer addPessoaConhecida(String nome, double x, double y) {
+    	Random rand = new Random();
+    	Integer id = (rand.nextInt(100)+1) + (rand.nextInt(100)+1) + (rand.nextInt(100)+1) + (rand.nextInt(100)+1);
         PessoaConhecida pessoa = new PessoaConhecida(x, y, nome);
+        pessoa.id = id;
         pessoasConhecidas.add(pessoa);
+  
+        return pessoa.id;
     }
 
     void removePessoaConhecida(double x, double y) {
