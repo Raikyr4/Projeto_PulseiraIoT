@@ -72,27 +72,33 @@ class PulseiraIoT {
             cadastrarButton.addActionListener(e -> {
                 String nome = entry.getText();
                 if (!nome.isEmpty()) {
-                    pulseira.addPessoaConhecida(nome, 550, 150);
-                    pulseira.cadastrarPessoaNoArquivo(nome);
+                	Integer id = pulseira.addPessoaConhecida(nome, 550, 150);
+                    pulseira.cadastrarPessoaNoArquivo(nome,id);
                     canvasPanel.repaint();
                     entry.setText("");
+                    JOptionPane.showMessageDialog(null, "Esse é o id da pessoa cadastrada \n LEMBRE DELE PARA A EXCLUSÃO! \n" + id);
                 }
             });
 
             JButton excluirButton = new JButton("Excluir Pessoa");
             excluirButton.addActionListener(e -> {
-                String nome = entry.getText();
-                if (!nome.isEmpty()) {
-                    boolean resposta = confirmDialog(frame, "Excluir Pessoa", "Deseja realmente excluir a pessoa " + nome + "?");
+                String codigo = entry.getText();
+                if (!codigo.isEmpty() && codigo.matches("\\d+")) {
+                    boolean resposta = confirmDialog(frame, "Excluir Pessoa", "Deseja realmente excluir a pessoa de código " + codigo + "?");
                     if (resposta) {
-                        pulseira.excluirPessoaDoArquivo(nome);
-                        PessoaConhecida pessoa = pulseira.getPessoaConhecidaByName(nome);
-                        if (pessoa != null) {
+                        pulseira.excluirPessoaDoArquivo(codigo);
+                        PessoaConhecida pessoa = pulseira.getPessoaConhecidaById(codigo);
+                        
+                        if (pessoa != null ) {
                             pulseira.removePessoaConhecida(pessoa.x, pessoa.y);
                         }
+               
                         canvasPanel.repaint();
                     }
                     entry.setText("");
+                }
+                else {
+                	JOptionPane.showMessageDialog(null, "Só é possível exluir uma pessoa pelo seu código ! \n     Liste os nomes e veja seu código");
                 }
             });
 
