@@ -5,6 +5,7 @@ class PessoaConhecida {
     double y;
     String nome;
     boolean detecting;
+    Integer id;
 
     PessoaConhecida(double x, double y, String nome) {
         this.x = x;
